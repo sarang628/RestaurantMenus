@@ -18,10 +18,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.menu.LocalRestaurantMenuImageLoader
+import com.sarang.torang.compose.menu.LocalRestaurantMenuPullToRefresh
 import com.sarang.torang.compose.menu.MenuData
 import com.sarang.torang.compose.menu.RestaurantMenu
 import com.sarang.torang.compose.menu.RestaurantMenuScreen
-import com.sarang.torang.di.restaurant_menu_di.customLocalRestaurantMenuImageLoader
+import com.sarang.torang.di.restaurant_menu_di.CustomRestaurantMenuPullToRefresh
+import com.sarang.torang.di.restaurant_menu_di.customRestaurantMenuImageLoader
 import com.sryang.torang.ui.TorangTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -55,7 +57,9 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable("RestaurantMenuScreen") {
-                                CompositionLocalProvider(LocalRestaurantMenuImageLoader provides customLocalRestaurantMenuImageLoader) {
+                                CompositionLocalProvider(LocalRestaurantMenuImageLoader provides customRestaurantMenuImageLoader,
+                                    LocalRestaurantMenuPullToRefresh provides CustomRestaurantMenuPullToRefresh
+                                ) {
                                     RestaurantMenuScreen(restaurantId = 1)
                                 }
                             }

@@ -132,4 +132,5 @@ dependencies {
     implementation(libs.commonImageLoader)
     implementation(libs.composePermissionTest)
     implementation(libs.bottomdetectlazycolunm)
+    implementation(libs.mui3scrolltorefresh)
 }

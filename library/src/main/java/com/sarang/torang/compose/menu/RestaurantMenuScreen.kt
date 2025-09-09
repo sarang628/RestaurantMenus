@@ -8,6 +8,7 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
@@ -27,12 +28,10 @@ fun RestaurantMenuScreen(
     val uiState = viewModel.uiState
     val state = rememberPullToRefreshState()
     LocalRestaurantMenuPullToRefresh.current.invoke(
-        false,
+        Modifier,
+        viewModel.isRefresh,
         {
-            coroutine.launch {
-                viewModel.loadMenu(restaurantId)
-                //state.updateState(RefreshIndicatorState.Default)
-            }
+            coroutine.launch { viewModel.loadMenu(restaurantId) }
         }) {
         if (uiState.isNotEmpty()) {
             RestaurantMenu(

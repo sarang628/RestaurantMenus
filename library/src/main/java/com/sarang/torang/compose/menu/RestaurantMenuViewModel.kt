@@ -15,15 +15,18 @@ import javax.inject.Inject
 class RestaurantMenuViewModel @Inject constructor(val getMenuUseCase: GetMenuUseCase) :
     ViewModel() {
     val tag = "__RestaurantMenuViewModel"
-    var uiState: List<MenuData> by mutableStateOf(ArrayList())
-        private set
+    var uiState: List<MenuData> by mutableStateOf(ArrayList()); private set
+    var isRefresh by mutableStateOf(false); private set
 
     fun loadMenu(restaurantId: Int) {
+        isRefresh = true
         viewModelScope.launch {
             try {
                 uiState = getMenuUseCase.invoke(restaurantId)
             } catch (e: Exception) {
                 Log.e(tag, "$e")
+            } finally {
+                isRefresh = false
             }
         }
     }
