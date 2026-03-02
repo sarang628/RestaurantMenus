@@ -57,7 +57,7 @@ android {
 dependencies {
     /** HILT */
     implementation(libs.hilt)
-    annotationProcessor(libs.hilt.compiler)
+    kapt(libs.hilt.compiler)
     implementation(libs.hilt.nav.compose) // hiltViewModel
 
     /** Retrofit */
