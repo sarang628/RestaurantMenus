@@ -51,15 +51,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
     }
 
-    hilt {
-        enableTransformForLocalTests = true
-    }
+    hilt { enableTransformForLocalTests = true }
 }
 
 dependencies {
     /** HILT */
     implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
+    annotationProcessor(libs.hilt.compiler)
     implementation(libs.hilt.nav.compose) // hiltViewModel
 
     /** Retrofit */
@@ -131,4 +129,5 @@ dependencies {
     implementation(libs.composePermissionTest)
     implementation(libs.bottomdetectlazycolunm)
     implementation(libs.mui3scrolltorefresh)
+    implementation(libs.coil)
 }
