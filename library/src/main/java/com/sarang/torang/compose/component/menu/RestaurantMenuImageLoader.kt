@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.menu
+package com.sarang.torang.compose.component.menu
 
 import android.util.Log
 import androidx.compose.runtime.Composable

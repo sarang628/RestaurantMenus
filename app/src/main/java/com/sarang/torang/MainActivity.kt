@@ -17,9 +17,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sarang.torang.compose.menu.LocalRestaurantMenuImageLoader
-import com.sarang.torang.compose.menu.LocalRestaurantMenuPullToRefresh
-import com.sarang.torang.compose.menu.MenuData
+import com.sarang.torang.compose.component.menu.LocalRestaurantMenuImageLoader
+import com.sarang.torang.compose.component.menu.LocalRestaurantMenuPullToRefresh
+import com.sarang.torang.compose.component.menu.MenuData
 import com.sarang.torang.compose.menu.RestaurantMenu
 import com.sarang.torang.compose.menu.RestaurantMenuScreen
 import com.sarang.torang.di.restaurant_menu_di.CustomRestaurantMenuPullToRefresh

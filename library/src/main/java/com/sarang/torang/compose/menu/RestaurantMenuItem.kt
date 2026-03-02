@@ -23,6 +23,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sarang.torang.compose.component.menu.AndroidViewRatingBar
+import com.sarang.torang.compose.component.menu.LocalRestaurantMenuImageLoader
+import com.sarang.torang.compose.component.menu.MenuData
 
 @Composable
 fun RestaurantMenuColumn(

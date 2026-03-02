@@ -1,4 +1,4 @@
-package com.sarang.torang.compose.menu
+package com.sarang.torang.compose.component.menu
 
 data class MenuData(val menuName: String, val price: Float, val url: String) {
     companion object {
