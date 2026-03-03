@@ -26,6 +26,9 @@ import androidx.compose.ui.unit.sp
 import com.sarang.torang.compose.component.menu.AndroidViewRatingBar
 import com.sarang.torang.compose.component.menu.LocalRestaurantMenuImageLoader
 import com.sarang.torang.compose.component.menu.MenuData
+import com.sarang.torang.compose.component.menu.RestaurantMenuImageLoaderData
+import com.sarang.torang.compose.component.menu.dummy
+import com.sarang.torang.compose.component.menu.empty
 
 @Composable
 fun RestaurantMenuColumn(
@@ -106,11 +109,11 @@ fun MenuItem(
             .padding(start = 2.dp, end = 2.dp, top = 2.dp, bottom = 2.dp)
     ) {
         LocalRestaurantMenuImageLoader.current.invoke(
-            Modifier.fillMaxSize(),
-            menu.url,
-            null,
-            null,
-            ContentScale.Crop
+            RestaurantMenuImageLoaderData(modifier        = Modifier.fillMaxSize(),
+                                               url             = menu.url,
+                                               progressSize           = null,
+                                               errorIconSize          = null,
+                                               contentScale    = ContentScale.Crop)
         )
 
         Box(
@@ -148,11 +151,11 @@ fun SmallMenuItem(
             .padding(start = 2.dp, end = 2.dp, top = 2.dp, bottom = 2.dp)
     ) {
         LocalRestaurantMenuImageLoader.current.invoke(
-            Modifier.fillMaxSize(),
-            menu.url,
-            20.dp,
-            20.dp,
-            ContentScale.Crop
+            RestaurantMenuImageLoaderData(modifier = Modifier.fillMaxSize(),
+                                               url = menu.url,
+                                               progressSize = 20.dp,
+                                               errorIconSize = 20.dp,
+                                               contentScale = ContentScale.Crop)
         )
         Box(
             Modifier
@@ -179,11 +182,11 @@ fun SmallMenuItem(
 @Preview
 @Composable
 fun PreviewMenuItem() {
-    MenuItem(menu = MenuData.dummy())
+    MenuItem(menu = MenuData.dummy()) //preview
 }
 
 @Preview
 @Composable
 fun PreviewSmallMenuItem() {
-    SmallMenuItem(menu = MenuData.empty().copy(menuName = "menuName", price = 4000f))
+    SmallMenuItem(menu = MenuData.empty().copy(menuName = "menuName", price = 4000f)) //preview
 }

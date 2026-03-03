@@ -20,6 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.component.menu.LocalRestaurantMenuImageLoader
 import com.sarang.torang.compose.component.menu.LocalRestaurantMenuPullToRefresh
 import com.sarang.torang.compose.component.menu.MenuData
+import com.sarang.torang.compose.component.menu.dummy
 import com.sarang.torang.compose.menu.RestaurantMenu
 import com.sarang.torang.compose.menu.RestaurantMenuScreen
 import com.sarang.torang.di.restaurant_menu_di.CustomRestaurantMenuPullToRefresh
