@@ -25,11 +25,14 @@ import com.sarang.torang.compose.menu.RestaurantMenu
 import com.sarang.torang.compose.menu.RestaurantMenuScreen
 import com.sarang.torang.di.restaurant_menu_di.CustomRestaurantMenuPullToRefresh
 import com.sarang.torang.di.restaurant_menu_di.customRestaurantMenuImageLoader
+import com.sarang.torang.repository.FindRepository
 import com.sryang.torang.ui.TorangTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject lateinit var findRepository : FindRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -61,7 +64,11 @@ class MainActivity : ComponentActivity() {
                                 CompositionLocalProvider(LocalRestaurantMenuImageLoader provides customRestaurantMenuImageLoader,
                                     LocalRestaurantMenuPullToRefresh provides CustomRestaurantMenuPullToRefresh
                                 ) {
-                                    RestaurantMenuScreen(restaurantId = 1)
+                                    TestContainer(findRepository = findRepository,
+                                        content = {
+                                            RestaurantMenuScreen(restaurantId = it)
+                                        }){
+                                    }
                                 }
                             }
                         }
