@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,70 +32,83 @@ import com.sarang.torang.compose.component.menu.RestaurantMenuImageLoaderData
 import com.sarang.torang.compose.component.menu.dummy
 import com.sarang.torang.compose.component.menu.empty
 
-@Composable
-fun RestaurantMenuColumn(
-    modifier: Modifier = Modifier,
+fun LazyListScope.restaurantMenuList(
     menus: List<MenuData> = listOf(),
     progressTintColor: Color? = null,
     columnCount: Int = 1,
     isSmallMenuItem: Boolean = false,
 ) {
-    Column(modifier) {
-        menus.chunked(columnCount).forEach { rowItems ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                rowItems.forEach { menu ->
-                    if (isSmallMenuItem) {
-                        SmallMenuItem(
-                            menu = menu,
-                            progressTintColor = progressTintColor,
-                            modifier = Modifier.weight(1f)
-                        )
-                    } else {
-                        MenuItem(
-                            menu = menu,
-                            progressTintColor = progressTintColor,
-                        )
-                    }
+    val menuList : List<List<MenuData>> = menus.chunked(columnCount)
+    items(menuList.size){
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            menuList[it].forEach { menu ->
+                if (isSmallMenuItem) {
+                    SmallMenuItem(
+                        menu = menu,
+                        progressTintColor = progressTintColor,
+                        modifier = Modifier.weight(1f)
+                    )
+                } else {
+                    MenuItem(
+                        menu = menu,
+                        progressTintColor = progressTintColor,
+                    )
                 }
-                // 빈 칸 채우기
-                repeat(columnCount - rowItems.size) {
-                    Spacer(modifier = Modifier.weight(1f))
-                }
+            }
+            // 빈 칸 채우기
+            repeat(columnCount - menuList[it].size) {
+                Spacer(modifier = Modifier.weight(1f))
             }
         }
     }
 }
 
+/**
+ * Vegetarian & Vegan $135
+ * Non-Vegetarian & Pescatarian $155
+ * Spirit Free Pairing $70
+ * Indienne Wine Pairing $95
+ * Reserve Wine Upgrade $50
+ *
+ * View
+ *
+ * NON VEGETARIAN TASTING MENU
+ * VEGETARIAN TASTING MENU
+ * PESCATARIAN TASTING MENU
+ * VEGAN TASTING MENU
+ * BAR MENU
+ */
 @Preview
 @Composable
 fun PreviewRestaurantMenuColumn(modifier: Modifier = Modifier) {
-    RestaurantMenuColumn(
+    LazyColumn {
+        restaurantMenuList(
         //@formatter:off
-        modifier = modifier,
         menus = listOf(
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_728.jpg", menuName = "hanburgerhanburgerhanburger", price = 12000f),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_740.jpg", menuName = "hanburger", price = 12000f),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_753.jpg", menuName = "hanburger", price = 12000f),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_765.jpg", menuName = "hanburger", price = 12000f),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_780.jpg", menuName = "hanburger", price = 12000f),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_782.jpg", menuName = "hanburger", price = 12000f),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_792.jpg", menuName = "hanburger", price = 12000f),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_801.jpg", menuName = "hanburger", price = 12000f),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_812.jpg", menuName = "hanburger", price = 12000f),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_822.jpg", menuName = "hanburger", price = 12000f),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_20_923.jpg", menuName = "hanburger", price = 12000f),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_36_394.jpg", menuName = "hanburger", price = 12000f),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_36_404.jpg", menuName = "hanburger", price = 12000f),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_53_226.jpg", menuName = "hanburger", price = 12000f),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_53_237.jpg", menuName = "hanburger", price = 12000f),
+            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_728.jpg", menuName = "Vegetarian & Vegan", price = "135$"),
+            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_740.jpg", menuName = "Non-Vegetarian & Pescatarian", price = "155$"),
+            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_753.jpg", menuName = "Spirit Free Pairing", price = "70$"),
+            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_765.jpg", menuName = "Indienne Wine Pairing ", price = "95$"),
+            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_780.jpg", menuName = "Reserve Wine Upgrade", price = "50$"),
+            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_782.jpg", menuName = "BAR MENU", price = ""),
+//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_792.jpg", menuName = "hanburger", price = "100$"),
+//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_801.jpg", menuName = "hanburger", price = "100$"),
+//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_812.jpg", menuName = "hanburger", price = "100$"),
+//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_822.jpg", menuName = "hanburger", price = "100$"),
+//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_20_923.jpg", menuName = "hanburger", price = "100$"),
+//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_36_394.jpg", menuName = "hanburger", price = "100$"),
+//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_36_404.jpg", menuName = "hanburger", price = "100$"),
+//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_53_226.jpg", menuName = "hanburger", price = "100$"),
+//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_53_237.jpg", menuName = "hanburger", price = "100$"),
         ),
         columnCount = 3,
         isSmallMenuItem = true,
         //@formatter:on
     )
+    }
 }
 
 @Composable
@@ -126,7 +141,7 @@ fun MenuItem(
             Column(Modifier.padding(4.dp)) {
                 AndroidViewRatingBar(rating = 3.0f, progressTintColor = progressTintColor)
                 Text(
-                    text = "${menu.menuName} (${menu.price})",
+                    text = menu.menuName + if (menu.price.isNotEmpty()) "(${menu.price})" else "",
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
@@ -167,7 +182,7 @@ fun SmallMenuItem(
         ) {
             Column(Modifier.padding(2.dp)) {
                 Text(
-                    text = "${menu.menuName}(${menu.price.toInt()})",
+                    text = "${menu.menuName}(${menu.price})",
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     fontSize = 12.sp,
@@ -189,5 +204,77 @@ fun PreviewMenuItem() {
 @Preview
 @Composable
 fun PreviewSmallMenuItem() {
-    SmallMenuItem(menu = MenuData.empty().copy(menuName = "menuName", price = 4000f)) //preview
+    SmallMenuItem(menu = MenuData.empty().copy(menuName = "menuName", price = "100$")) //preview
+}
+
+@Preview
+@Composable
+fun MenuDetail(){
+    Text("NON-VEGETARIAN TASTING MENU\n" +
+            "\n" +
+            "DHOKLA AERO\n" +
+            "\n" +
+            "Curry Leaf, Mustard \n" +
+            "\n" +
+            "\u200B\n" +
+            "\n" +
+            "PANI PURI\n" +
+            "\n" +
+            "Passion Fruit, Green Apple, Buckwheat\n" +
+            "\n" +
+            "\u200B\n" +
+            "\n" +
+            "MUSHROOM GALOUTI\n" +
+            "\n" +
+            "Eclair, Goat Cheese, Truffle\n" +
+            "\n" +
+            "\u200B\n" +
+            "\n" +
+            "YOGURT CHAAT\n" +
+            "\n" +
+            "Strawberry, Mint, Tamarind\u200B\n" +
+            "\n" +
+            " \n" +
+            "\n" +
+            "SCALLOP CAFREAL\n" +
+            "\n" +
+            "Miso, Golden Kaluga, Young Garlic\n" +
+            "\n" +
+            "\u200B\n" +
+            "\n" +
+            "\u200BLOBSTER GHEE ROAST\n" +
+            "\n" +
+            "Ela Ada, Sunchoke, Mango\n" +
+            "\n" +
+            "(Supplemental Course - \$28)\n" +
+            "\n" +
+            "\u200B\n" +
+            "\n" +
+            "LAMB KEBAB\n" +
+            "\n" +
+            "Shami, Ribs, Endive, Pickled Jicama\n" +
+            "\n" +
+            "(Supplemental Bread- Chili Cheese Kulcha- \$6)\n" +
+            "\n" +
+            "\u200B\n" +
+            "\n" +
+            "CHICKEN MAKHNI\n" +
+            "\n" +
+            "Red Pepper Makhni, Fenugreek\n" +
+            "\n" +
+            "Black Dairy Dal, Garlic Naan\n" +
+            "\n" +
+            " \n" +
+            "\n" +
+            "KAJU KATLI\n" +
+            "\n" +
+            "Honeycomp, Nougat, Milk Ice Cream\u200B\n" +
+            "\n" +
+            "\u200B\n" +
+            "\n" +
+            "TREATS\n" +
+            "\n" +
+            "Coffee\n" +
+            "\n" +
+            "Mango and Ginger")
 }

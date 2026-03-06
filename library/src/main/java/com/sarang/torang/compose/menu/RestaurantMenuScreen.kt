@@ -1,5 +1,6 @@
 package com.sarang.torang.compose.menu
 
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -38,10 +39,15 @@ fun RestaurantMenuScreen(viewModel          : RestaurantMenuViewModel   = hiltVi
             onRefresh = { coroutine.launch { viewModel.loadMenu(restaurantId) } },
             contents = {
                 if (uiState.isNotEmpty()) {
-                    RestaurantMenu(list = uiState,
+                    /*RestaurantMenu(list = uiState,
                                    isSmallMenuItem = isSmallMenuItem,
                                    progressTintColor = progressTintColor,
-                                   columnCount = columnCount)
+                                   columnCount = columnCount)*/
+
+                    LazyColumn { restaurantMenuList(menus               = uiState,
+                                                    isSmallMenuItem     = isSmallMenuItem,
+                                                    columnCount         = columnCount,
+                                                    progressTintColor   = progressTintColor) }
                 } else {
                     Text("등록된 메뉴가 없습니다.")
                 }
