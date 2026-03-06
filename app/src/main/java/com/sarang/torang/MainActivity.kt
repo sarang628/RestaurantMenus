@@ -50,6 +50,7 @@ class MainActivity : ComponentActivity() {
                             }
                             composable("RestaurantMenu") {
                                 RestaurantMenu(
+                                    isSmallMenuItem = true,
                                     list = listOf(
                                         MenuData.dummy(),
                                         MenuData.dummy(),
@@ -66,7 +67,9 @@ class MainActivity : ComponentActivity() {
                                 ) {
                                     TestContainer(findRepository = findRepository,
                                         content = {
-                                            RestaurantMenuScreen(restaurantId = it)
+                                            RestaurantMenuScreen(restaurantId = it,
+                                                                 isSmallMenuItem = true,
+                                                                 columnCount = 3)
                                         }){
                                     }
                                 }

@@ -151,7 +151,8 @@ fun SmallMenuItem(
             .padding(start = 2.dp, end = 2.dp, top = 2.dp, bottom = 2.dp)
     ) {
         LocalRestaurantMenuImageLoader.current.invoke(
-            RestaurantMenuImageLoaderData(modifier = Modifier.fillMaxSize(),
+            RestaurantMenuImageLoaderData(modifier = Modifier.clip(RoundedCornerShape(8.dp))
+                                                                  .fillMaxSize(),
                                                url = menu.url,
                                                progressSize = 20.dp,
                                                errorIconSize = 20.dp,
@@ -166,11 +167,11 @@ fun SmallMenuItem(
         ) {
             Column(Modifier.padding(2.dp)) {
                 Text(
-                    text = "${menu.menuName}-${menu.price.toInt()}",
+                    text = "${menu.menuName}(${menu.price.toInt()})",
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     fontSize = 12.sp,
-                    maxLines = 1,
+                    maxLines = 3,
                     overflow = TextOverflow.Ellipsis
 
                 )

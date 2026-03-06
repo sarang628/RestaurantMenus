@@ -23,7 +23,8 @@ import kotlinx.coroutines.launch
 fun RestaurantMenuScreen(viewModel          : RestaurantMenuViewModel   = hiltViewModel(),
                          restaurantId       : Int                       = 0,
                          progressTintColor  : Color?                    = null,
-                         columnCount        : Int                       = 1) {
+                         columnCount        : Int                       = 1,
+                         isSmallMenuItem    : Boolean                   = false) {
     val coroutine = rememberCoroutineScope()
     LaunchedEffect(key1 = restaurantId) {
         viewModel.loadMenu(restaurantId)
@@ -37,11 +38,10 @@ fun RestaurantMenuScreen(viewModel          : RestaurantMenuViewModel   = hiltVi
             onRefresh = { coroutine.launch { viewModel.loadMenu(restaurantId) } },
             contents = {
                 if (uiState.isNotEmpty()) {
-                    RestaurantMenu(
-                        list = uiState,
-                        progressTintColor = progressTintColor,
-                        columnCount = columnCount
-                    )
+                    RestaurantMenu(list = uiState,
+                                   isSmallMenuItem = isSmallMenuItem,
+                                   progressTintColor = progressTintColor,
+                                   columnCount = columnCount)
                 } else {
                     Text("등록된 메뉴가 없습니다.")
                 }
