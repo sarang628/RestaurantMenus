@@ -2,7 +2,6 @@ package com.sarang.torang.compose.menu
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sarang.torang.compose.component.menu.LocalRestaurantMenuPullToRefresh
-import com.sarang.torang.compose.component.menu.MenuData
+import com.sarang.torang.compose.component.menu.Menu
 import com.sarang.torang.compose.component.menu.RestaurantMenuPullToRefreshData
 import kotlinx.coroutines.launch
 
@@ -44,8 +43,7 @@ fun RestaurantMenuScreen(viewModel          : RestaurantMenuViewModel   = hiltVi
                                    progressTintColor = progressTintColor,
                                    columnCount = columnCount)*/
 
-                    LazyColumn { restaurantMenuList(menus               = uiState,
-                                                    isSmallMenuItem     = isSmallMenuItem,
+                    LazyColumn { restaurantMenuList(menus               = uiState.plus(sampleData),
                                                     columnCount         = columnCount,
                                                     progressTintColor   = progressTintColor) }
                 } else {
@@ -56,7 +54,7 @@ fun RestaurantMenuScreen(viewModel          : RestaurantMenuViewModel   = hiltVi
 }
 @Composable
 fun RestaurantMenu(
-    list: List<MenuData>,
+    list: List<Menu.Item>,
     progressTintColor: Color? = null,
     columnCount: Int = 1,
     isSmallMenuItem: Boolean = false

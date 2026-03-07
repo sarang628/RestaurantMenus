@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sarang.torang.compose.component.menu.MenuData
+import com.sarang.torang.compose.component.menu.Menu
 import com.sarang.torang.usecase.GetMenuUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class RestaurantMenuViewModel @Inject constructor(val getMenuUseCase: GetMenuUseCase) :
     ViewModel() {
     val tag = "__RestaurantMenuViewModel"
-    var uiState: List<MenuData> by mutableStateOf(ArrayList()); private set
+    var uiState: List<Menu> by mutableStateOf(ArrayList()); private set
     var isRefresh by mutableStateOf(false); private set
 
     fun loadMenu(restaurantId: Int) {

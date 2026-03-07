@@ -5,13 +5,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,40 +27,35 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sarang.torang.compose.component.menu.AndroidViewRatingBar
 import com.sarang.torang.compose.component.menu.LocalRestaurantMenuImageLoader
-import com.sarang.torang.compose.component.menu.MenuData
+import com.sarang.torang.compose.component.menu.Menu
 import com.sarang.torang.compose.component.menu.RestaurantMenuImageLoaderData
-import com.sarang.torang.compose.component.menu.dummy
-import com.sarang.torang.compose.component.menu.empty
+
+/**
+ * https://www.indiennechicago.com/menus-reservation
+ */
 
 fun LazyListScope.restaurantMenuList(
-    menus: List<MenuData> = listOf(),
+    menus: List<Menu> = listOf(),
     progressTintColor: Color? = null,
     columnCount: Int = 1,
-    isSmallMenuItem: Boolean = false,
 ) {
-    val menuList : List<List<MenuData>> = menus.chunked(columnCount)
-    items(menuList.size){
+    items(menus){
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            menuList[it].forEach { menu ->
-                if (isSmallMenuItem) {
+            when(it){
+                is Menu.Category -> {
+                    Text(it.category)
+                }
+                is Menu.Item -> {
                     SmallMenuItem(
-                        menu = menu,
+                        menu = it,
                         progressTintColor = progressTintColor,
                         modifier = Modifier.weight(1f)
                     )
-                } else {
-                    MenuItem(
-                        menu = menu,
-                        progressTintColor = progressTintColor,
-                    )
                 }
-            }
-            // 빈 칸 채우기
-            repeat(columnCount - menuList[it].size) {
-                Spacer(modifier = Modifier.weight(1f))
+                else -> {}
             }
         }
     }
@@ -87,34 +82,66 @@ fun PreviewRestaurantMenuColumn(modifier: Modifier = Modifier) {
     LazyColumn {
         restaurantMenuList(
         //@formatter:off
-        menus = listOf(
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_728.jpg", menuName = "Vegetarian & Vegan", price = "135$"),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_740.jpg", menuName = "Non-Vegetarian & Pescatarian", price = "155$"),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_753.jpg", menuName = "Spirit Free Pairing", price = "70$"),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_765.jpg", menuName = "Indienne Wine Pairing ", price = "95$"),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_780.jpg", menuName = "Reserve Wine Upgrade", price = "50$"),
-            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_782.jpg", menuName = "BAR MENU", price = ""),
-//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_792.jpg", menuName = "hanburger", price = "100$"),
-//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_801.jpg", menuName = "hanburger", price = "100$"),
-//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_812.jpg", menuName = "hanburger", price = "100$"),
-//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_46_46_822.jpg", menuName = "hanburger", price = "100$"),
-//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_20_923.jpg", menuName = "hanburger", price = "100$"),
-//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_36_394.jpg", menuName = "hanburger", price = "100$"),
-//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_36_404.jpg", menuName = "hanburger", price = "100$"),
-//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_53_226.jpg", menuName = "hanburger", price = "100$"),
-//            MenuData.dummy().copy(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_49_53_237.jpg", menuName = "hanburger", price = "100$"),
-        ),
+        menus = sampleData,
         columnCount = 3,
-        isSmallMenuItem = true,
         //@formatter:on
     )
     }
 }
 
+val sampleData = listOf(
+    Menu.Category(category = "Main"),
+    Menu.Item(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_728.jpg",
+        menuName = "Vegetarian & Vegan",
+        price = "135$"),
+    Menu.Item(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_740.jpg",
+        menuName = "Non-Vegetarian & Pescatarian",
+        price = "155$"),
+    Menu.Item(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_753.jpg",
+        menuName = "Spirit Free Pairing",
+        price = "70$"),
+    Menu.Item(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_765.jpg",
+        menuName = "Indienne Wine Pairing ",
+        price = "95$"),
+    Menu.Item(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_780.jpg",
+        menuName = "Reserve Wine Upgrade",
+        price = "50$"),
+    Menu.Category(category = "Bar Menu"),
+    Menu.Item(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_780.jpg",
+        menuName = "AVOCADO BHEL\n"+
+                "Ember Roasted Ponk, Green Apple, Tamarind (V)",
+        price = "15$"),
+    Menu.Item(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_780.jpg",
+        menuName = "AVOCADO BHEL\n"+
+                "Ember Roasted Ponk, Green Apple, Tamarind (V)",
+        price = "15$"),
+    Menu.Item(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_780.jpg",
+        menuName = "CAULIFLOWER KOLIWADA\n"+
+                "Carrot Pachadi, Curry Leaf, Podi (V)",
+        price = "15$"),
+    Menu.Item(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_780.jpg",
+        menuName = "GREEN PEA & FAVA KULCHA\n"+
+                "Tomato Pachadi, Umbria Truffle (V)",
+        price = "18$"),
+    Menu.Item(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_780.jpg",
+        menuName = "PORK BELLY BBQ\n"+
+                "Pomegranate, Compressed Apple, Apricot, Mustard",
+        price = "15$"),
+    Menu.Item(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_780.jpg",
+        menuName = "OCTOPUS XEC XEC\n"+
+                "Cauliflower Mousseline, Pickled Kohlrabi, Fermented Gooseberry Gel, Black garlic",
+        price = "18$"),
+    Menu.Item(url = "http://sarang628.iptime.org:89/review_images/1/214/2024-08-18/01_43_58_780.jpg",
+        menuName = "CHICKEN GUSTABA\n"+
+                "Amul Cheese Fondue, Périgord Truffle, Coriander",
+        price = "18$"),
+
+    )
+
 @Composable
 fun MenuItem(
     modifier: Modifier = Modifier,
-    menu: MenuData,
+    menu: Menu.Item,
     progressTintColor: Color? = null,
 ) {
     Box(
@@ -156,7 +183,7 @@ fun MenuItem(
 @Composable
 fun SmallMenuItem(
     modifier: Modifier = Modifier,
-    menu: MenuData,
+    menu: Menu.Item,
     progressTintColor: Color? = null
 ) {
     Box(
@@ -198,13 +225,13 @@ fun SmallMenuItem(
 @Preview
 @Composable
 fun PreviewMenuItem() {
-    MenuItem(menu = MenuData.dummy()) //preview
+    MenuItem(menu = Menu.Item()) //preview
 }
 
 @Preview
 @Composable
 fun PreviewSmallMenuItem() {
-    SmallMenuItem(menu = MenuData.empty().copy(menuName = "menuName", price = "100$")) //preview
+    SmallMenuItem(menu = Menu.Item(menuName = "menuName", price = "100$")) //preview
 }
 
 @Preview
