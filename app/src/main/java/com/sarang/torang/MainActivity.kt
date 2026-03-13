@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sarang.torang.compose.component.menu.LocalRestaurantMenuImageLoader
 import com.sarang.torang.compose.component.menu.LocalRestaurantMenuPullToRefresh
+import com.sarang.torang.compose.menu.PreviewRestaurantMenuColumn
 import com.sarang.torang.compose.menu.RestaurantMenu
 import com.sarang.torang.compose.menu.RestaurantMenuScreen
 import com.sarang.torang.di.restaurant_menu_di.CustomRestaurantMenuPullToRefresh
@@ -47,10 +48,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                             composable("RestaurantMenu") {
-                                RestaurantMenu(
-                                    isSmallMenuItem = true,
-                                    list = listOf()
-                                )
+                                PreviewRestaurantMenuColumn()
                             }
                             composable("RestaurantMenuScreen") {
                                 CompositionLocalProvider(LocalRestaurantMenuImageLoader provides customRestaurantMenuImageLoader,
