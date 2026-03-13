@@ -38,7 +38,7 @@ fun RestaurantMenuScreen(viewModel          : RestaurantMenuViewModel   = hiltVi
             onRefresh = { coroutine.launch { viewModel.loadMenu(restaurantId) } },
             contents = {
                 if (uiState.isNotEmpty()) {
-                    LazyColumn { restaurantMenuList(menus               = uiState.plus(sampleData),
+                    LazyColumn { restaurantMenuList(menus               = uiState,
                                                     columnCount         = columnCount,
                                                     progressTintColor   = progressTintColor) }
                 } else {
