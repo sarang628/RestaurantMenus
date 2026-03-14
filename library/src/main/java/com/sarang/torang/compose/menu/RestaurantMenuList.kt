@@ -85,8 +85,7 @@ fun PreviewRestaurantMenuColumn() {
     LazyColumn {
         restaurantMenuList(
             //@formatter:off
-            menus = sampleData,
-            columnCount = 3,
+            menus = sampleData
             //@formatter:on
         )
     }

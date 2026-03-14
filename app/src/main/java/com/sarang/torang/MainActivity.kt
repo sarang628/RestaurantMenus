@@ -56,9 +56,7 @@ class MainActivity : ComponentActivity() {
                                 ) {
                                     TestContainer(findRepository = findRepository,
                                         content = {
-                                            RestaurantMenuScreen(restaurantId = it,
-                                                                 isSmallMenuItem = true,
-                                                                 columnCount = 3)
+                                            RestaurantMenuScreen(restaurantId = it)
                                         }){
                                     }
                                 }
