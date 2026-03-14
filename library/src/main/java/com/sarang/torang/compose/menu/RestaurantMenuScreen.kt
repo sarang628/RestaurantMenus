@@ -22,15 +22,12 @@ import kotlinx.coroutines.launch
 @Composable
 fun RestaurantMenuScreen(viewModel          : RestaurantMenuViewModel   = hiltViewModel(),
                          restaurantId       : Int                       = 0,
-                         progressTintColor  : Color?                    = null,
-                         columnCount        : Int                       = 1,
-                         isSmallMenuItem    : Boolean                   = false) {
+                         progressTintColor  : Color?                    = null) {
     val coroutine = rememberCoroutineScope()
     LaunchedEffect(key1 = restaurantId) {
         viewModel.loadMenu(restaurantId)
     }
     val uiState = viewModel.uiState
-    val state = rememberPullToRefreshState()
     LocalRestaurantMenuPullToRefresh.current.invoke(
         RestaurantMenuPullToRefreshData(
             modifier = Modifier,
@@ -39,7 +36,6 @@ fun RestaurantMenuScreen(viewModel          : RestaurantMenuViewModel   = hiltVi
             contents = {
                 if (uiState.isNotEmpty()) {
                     LazyColumn { restaurantMenuList(menus               = uiState,
-                                                    columnCount         = columnCount,
                                                     progressTintColor   = progressTintColor) }
                 } else {
                     Text("등록된 메뉴가 없습니다.")

@@ -23,8 +23,7 @@ import com.sarang.torang.compose.component.menu.Menu
 
 fun LazyListScope.restaurantMenuList(
     menus: List<Menu> = listOf(),
-    progressTintColor: Color? = null,
-    columnCount: Int = 1,
+    progressTintColor: Color? = null
 ) {
     items(menus){
         Row(
