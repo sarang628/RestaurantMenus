@@ -13,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -40,28 +41,28 @@ class MainActivity : ComponentActivity() {
             TorangTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Box(Modifier.padding(innerPadding)) {
-                        NavHost(navController = navHostController, startDestination = "menu") {
-                            composable("menu") {
-                                Column {
-                                    Button({ navHostController.navigate("RestaurantMenu") }) { Text("RestaurantMenu") }
-                                    Button({ navHostController.navigate("RestaurantMenuScreen") }) { Text("RestaurantMenuScreen") }
-                                }
-                            }
-                            composable("RestaurantMenu") {
+                        MenuNavigation(
+                            navHostController = navHostController,
+                            restaurantMenu = {
                                 PreviewRestaurantMenuColumn()
-                            }
-                            composable("RestaurantMenuScreen") {
+                            },
+                            restaurantMenuScreen = {
                                 CompositionLocalProvider(LocalRestaurantMenuImageLoader provides customRestaurantMenuImageLoader,
                                     LocalRestaurantMenuPullToRefresh provides CustomRestaurantMenuPullToRefresh
                                 ) {
                                     TestContainer(findRepository = findRepository,
-                                        content = {
-                                            RestaurantMenuScreen(restaurantId = it)
+                                        content = { restaurantId, restaurantName ->
+                                            Column {
+                                                Text(
+                                                    modifier = Modifier.padding(16.dp),
+                                                    text = restaurantName)
+                                                RestaurantMenuScreen(restaurantId = restaurantId)
+                                            }
                                         }){
                                     }
                                 }
                             }
-                        }
+                        )
                     }
                 }
             }

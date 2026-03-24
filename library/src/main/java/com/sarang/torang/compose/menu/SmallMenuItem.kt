@@ -33,12 +33,14 @@ fun SmallMenuItem(
 ) {
     Box(
         modifier = modifier
-            .height(100.dp)
             .fillMaxWidth()
             .padding(start = 2.dp, end = 2.dp, top = 2.dp, bottom = 2.dp)
     ) {
+        if(!menu.url.equals("http://sarang628.iptime.org:89/menu_images/"))
         LocalRestaurantMenuImageLoader.current.invoke(
-            RestaurantMenuImageLoaderData(modifier = Modifier.clip(RoundedCornerShape(8.dp))
+            RestaurantMenuImageLoaderData(modifier = Modifier
+                .height(100.dp)
+                .clip(RoundedCornerShape(8.dp))
                 .fillMaxSize(),
                 url = menu.url,
                 progressSize = 20.dp,

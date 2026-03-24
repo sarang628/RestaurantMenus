@@ -1,6 +1,7 @@
 package com.sarang.torang.compose.menu
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,9 +11,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sarang.torang.compose.component.menu.Menu
@@ -32,12 +35,19 @@ fun LazyListScope.restaurantMenuList(
         ) {
             when(it){
                 is Menu.Category -> {
-                    Text(
-                        modifier = Modifier.padding(4.dp),
-                        text = it.category,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                    Box(Modifier.fillMaxWidth()){
+                        Text(
+                            modifier = Modifier.padding(4.dp),
+                            text = it.category,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+
+                        Text(modifier = Modifier.align(Alignment.CenterEnd),
+                             text = it.price,
+                             fontWeight = FontWeight.Bold,
+                             color = MaterialTheme.colorScheme.onBackground)
+                    }
                 }
                 is Menu.Item -> {
                     SmallMenuItem(
